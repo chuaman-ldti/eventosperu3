@@ -129,10 +129,26 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <a href="logout.php" class="logout-link">Cerrar Sesión</a>
     </div>
     </header>
+        <div style="
+         text-align:center;
+         margin-top: 35px;
+         margin-bottom: -10px;">
+
+      <a href="menu.php" 
+           style="
+           font-size: 22px;
+           font-weight: 600;
+          color: #263238;
+          text-decoration: none;">
+           ← Volver al Panel Principal
+         </a>
+        </div>
 
     <main class="container signup-page">
-        <form id="signupForm" method="post" action="" color="#263238">
-            <h2>Registrar nuevo usuario</h2>
+
+    <form id="signupForm" method="post" action="" color="#263238">
+
+        <h2 style="margin-top:0;">Registrar nuevo usuario</h2>
 
             <?php if (!empty($errors)): ?>
                 <?php foreach ($errors as $error): ?>
@@ -148,9 +164,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit" class="btn">Registrar</button>
             
-            <p style="text-align:center; margin-top: 15px; font-size:13px;">
-                <a href="menu.php" style="color:var(--muted); text-decoration: none;">← Volver al Panel Principal</a>
-            </p>
         </form>
     </main>
     <script src="../assets/app.js"></script>

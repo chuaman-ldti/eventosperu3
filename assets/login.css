@@ -1,0 +1,83 @@
+/* Fondo tipo galaxia */
+body {
+    background: url('https://wallpapers.com/images/featured/fondods-de-galaxia-verde-4r1z92ebrwwm48uw.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Caja del login */
+.login {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    padding: 30px;
+    width: 330px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.25);
+    text-align: center;
+}
+
+/* Título */
+h2 {
+    color: rgb(23, 255, 23);
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+    font-size: 26px;
+}
+
+/* Mensaje de error */
+.error {
+    color: #ff5b5b;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(23, 255, 23, 0.4);
+    border-radius: 6px;
+    font-size: 16px;
+    color: white;
+
+    box-shadow: 0 0 12px rgba(23, 255, 23, 0.15);
+}
+
+input::placeholder {
+    color: rgb(200, 200, 200);
+}
+
+/* Botón */
+#boton {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: bold;
+
+    background: rgb(23, 255, 23);
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    box-shadow: 0 0 15px rgba(23, 255, 23, 0.5);
+    transition: .2s ease-in-out;
+}
+
+/* Efecto hover del botón */
+#boton:hover {
+    background: rgb(0, 200, 0);
+    box-shadow: 0 0 25px rgba(23, 255, 23, 0.8);
+}

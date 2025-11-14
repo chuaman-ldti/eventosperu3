@@ -1,99 +1,106 @@
 <?php
 // proveedores.php - PDO version
 require_once __DIR__ . "/../config/database.php";
-require_once __DIR__ . "/api_bootstrap.php";
+header('Content-Type: application/json; charset=utf-8');
+
+// Debug temporal: registrar petición entrante
+file_put_contents(__DIR__ . '/providers_debug.log',
+  date('c') . " REMOTE=" . ($_SERVER['REMOTE_ADDR'] ?? 'cli') .
+  " METHOD=" . $_SERVER['REQUEST_METHOD'] .
+  " RAW=" . file_get_contents('php://input') .
+  " POST=" . print_r($_POST, true) . PHP_EOL,
+  FILE_APPEND
+);
+
+function resp_ok($data = null, $code = 200) {
+    http_response_code($code);
+    echo json_encode(['success' => true, 'data' => $data]);
+    exit;
+}
+function resp_err($msg = 'Error', $code = 400) {
+    http_response_code($code);
+    echo json_encode(['error' => true, 'message' => $msg]);
+    exit;
+}
+function read_json() {
+    $raw = file_get_contents('php://input');
+    $data = json_decode($raw, true);
+    return is_array($data) ? $data : [];
+}
+function get_input() {
+    $d = read_json();
+    if (!$d && $_POST) $d = $_POST;
+    return $d ?: [];
+}
+
 $db = new Database();
 $conn = $db->connect();
 $method = $_SERVER['REQUEST_METHOD'];
+
+$allowed = ['nombre','categoria','distrito','precio','reputacion','experiencia'];
 
 try {
     if ($method === 'GET') {
         if (isset($_GET['id'])) {
             $id = intval($_GET['id']);
-            $stmt = $conn->prepare("SELECT * FROM proveedores WHERE id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt = $conn->prepare("SELECT id,nombre,categoria,distrito,precio,reputacion,experiencia,created_at FROM proveedores WHERE id = :id");
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            $res = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$res) resp_err("proveedores no encontrado", 404);
-            resp_ok($res);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) resp_err('Proveedor no encontrado',404);
+            resp_ok($row);
         } else {
-            $stmt = $conn->query("SELECT * FROM proveedores ORDER BY id DESC");
+            $stmt = $conn->query("SELECT id,nombre,categoria,distrito,precio,reputacion,experiencia,created_at FROM proveedores ORDER BY id DESC");
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             resp_ok($rows);
         }
     }
 
     if ($method === 'POST') {
-        $data = read_json();
-        // Minimal validation: require 'nombre' or 'titulo' depending - try nombre
-        if (empty($data['nombre']) && empty($data['titulo'])) resp_err("Campo obligatorio: nombre/titulo", 400);
-        $fields = [];
-        $params = [];
-        // We will assume common fields: nombre, telefono, email, cliente_id, proveedor_id, fecha, estado, descripcion
-        $possible = ['nombre','telefono','email','cliente_id','proveedor_id','fecha','estado','descripcion','titulo','precio'];
-        foreach ($possible as $f) {
-            if (isset($data[$f])) {
-                $fields[] = $f;
-                $params[$f] = $data[$f];
-            }
+        $data = get_input();
+        $fields = []; $params = [];
+        foreach ($allowed as $f) {
+            if (isset($data[$f])) { $fields[] = $f; $params[$f] = $data[$f]; }
         }
-        if (empty($fields)) resp_err("No hay campos para insertar", 400);
-        $cols = implode(", ", $fields);
-        $place = ":" . implode(", :", $fields);
+        if (empty($fields)) resp_err('No hay campos para insertar',400);
+        $cols = implode(', ', $fields);
+        $place = ':' . implode(', :', $fields);
         $sql = "INSERT INTO proveedores ($cols) VALUES ($place)";
         $stmt = $conn->prepare($sql);
-        foreach ($params as $k => $v) {
-            $stmt->bindValue(':' . $k, $v);
-        }
-        if ($stmt->execute()) {
-            resp_ok(["success" => true, "id" => $conn->lastInsertId()], 201);
-        } else {
-            resp_err("Error al crear proveedores", 500);
-        }
+        foreach ($params as $k=>$v) $stmt->bindValue(':' . $k, $v);
+        if ($stmt->execute()) resp_ok(['id' => $conn->lastInsertId()],201);
+        resp_err('Error al insertar',500);
     }
 
     if ($method === 'PUT') {
-        if (!isset($_GET['id'])) resp_err("Se requiere id", 400);
+        if (!isset($_GET['id'])) resp_err('Se requiere id',400);
         $id = intval($_GET['id']);
-        $data = read_json();
-        $stmt = $conn->prepare("SELECT * FROM proveedores WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $existing = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$existing) resp_err("proveedores no encontrado", 404);
+        $data = get_input();
         $updates = [];
-        foreach ($data as $k => $v) {
-            $updates[] = "$k = :$k";
-        }
-        if (empty($updates)) resp_err("No hay campos para actualizar", 400);
-        $sql = "UPDATE proveedores SET " . implode(", ", $updates) . " WHERE id = :id";
+        foreach ($allowed as $f) if (isset($data[$f])) $updates[$f] = $data[$f];
+        if (empty($updates)) resp_err('No hay campos para actualizar',400);
+        $set = implode(', ', array_map(function($k){return "$k = :$k";}, array_keys($updates)));
+        $sql = "UPDATE proveedores SET $set WHERE id = :id";
         $stmt = $conn->prepare($sql);
-        foreach ($data as $k => $v) {
-            $stmt->bindValue(':' . $k, $v);
-        }
+        foreach ($updates as $k=>$v) $stmt->bindValue(':' . $k, $v);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        if ($stmt->execute()) {
-            resp_ok(["success" => true, "id" => $id]);
-        } else {
-            resp_err("Error al actualizar proveedores", 500);
-        }
+        if ($stmt->execute()) resp_ok(['id'=>$id]);
+        resp_err('Error al actualizar',500);
     }
 
     if ($method === 'DELETE') {
-        if (!isset($_GET['id'])) resp_err("Se requiere id", 400);
+        if (!isset($_GET['id'])) resp_err('Se requiere id',400);
         $id = intval($_GET['id']);
         $stmt = $conn->prepare("DELETE FROM proveedores WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        if ($stmt->execute()) {
-            resp_ok(["success" => true, "id" => $id]);
-        } else {
-            resp_err("Error al eliminar proveedores", 500);
-        }
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        if ($stmt->execute()) resp_ok(['id'=>$id]);
+        resp_err('Error al eliminar',500);
     }
 
-    resp_err("Método no soportado", 405);
+    resp_err('Método no soportado',405);
 
 } catch (PDOException $e) {
-    resp_err("Error de base de datos: " . $e->getMessage(), 500);
+    resp_err('DB error: ' . $e->getMessage(),500);
 }
 ?>
+console.log('app.js cargado?', !!window.loadTable, 'typeof loadTable:', typeof loadTable);

@@ -1,0 +1,96 @@
+2025-11-14T02:57:16+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T02:57:23+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T02:57:28+01:00 REMOTE=::1 METHOD=POST RAW={"id":"","nombre":"dsadasd","categoria":"asdasda","distrito":"asdasd","precio":"1","reputacion":"1","experiencia":"1"} POST=Array
+(
+)
+
+2025-11-14T02:57:28+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T02:59:59+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:01:57+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:02:05+01:00 REMOTE=::1 METHOD=POST RAW={"id":"","nombre":"asdasdaaaaaaaaaaa","categoria":"aaaaaa","distrito":"aaa","precio":"22","reputacion":"02","experiencia":"2"} POST=Array
+(
+)
+
+2025-11-14T03:02:05+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:02:39+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:02:55+01:00 REMOTE=::1 METHOD=PUT RAW={"id":"8","nombre":"prueba","categoria":"asda","distrito":"asda","precio":"21","reputacion":"1","experiencia":"11"} POST=Array
+(
+)
+
+2025-11-14T03:02:56+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:11:12+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:13:36+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:13:36+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:22:42+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:26:49+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:26:57+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:26:59+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:27:02+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:49:15+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:49:16+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:49:16+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T03:49:17+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+
+2025-11-14T04:22:05+01:00 REMOTE=::1 METHOD=GET RAW= POST=Array
+(
+)
+

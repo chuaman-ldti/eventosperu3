@@ -1,4 +1,6 @@
 /* assets/style.css - Event theme (Deep Space Sparkle) */
+/* Estilos globales mejorados para toda la página (formulario, tabla, layout, botones) */
+
 :root{
   /* --- Paleta Deep Space Sparkle (Azul-Verde Oscuro) --- */
   --deep-space-sparkle: #4A646C; /* El color principal - Tono oscuro */
@@ -11,16 +13,522 @@
   --shadow: 0 6px 18px rgba(0,0,0,0.12);
   --glass: rgba(255,255,255,0.6);
   --btn-text:white; /* Texto de botón principal en blanco */
+  --accent-600:#1e40af;
+  --success:#10b981;
+  --danger:#ef4444;
+  --border:#e6e9ef;
+  --radius:10px;
+  --shadow: 0 6px 20px rgba(16,24,40,0.06);
+  --max-w:1100px;
+  --gap:14px;
+  --mono: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
+*{box-sizing:border-box}
+html,body{height:100%}
 body{
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  margin:0;
+  font-family:var(--mono);
   /* Degradado sutil en tonos grises/azules muy claros */
   background: linear-gradient(120deg,var(--bg) 0%, #E8F1F2 100%);
-  margin:0;
   color:var(--text-main);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  padding:28px 18px;
 }
+
+/* Container */
+.container{
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:22px;
+}
+
+/* Header */
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+header h1{font-size:20px;margin:0;color:var(--accent-600)}
+.header-meta{color:var(--muted);font-size:13px}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+
+/* Form layout */
+.form-card{margin-bottom:18px}
+.grid-form{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--gap);
+  align-items:end;
+}
+.grid-form label{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted)}
+.grid-form input[type="text"],
+.grid-form input[type="number"],
+.grid-form select,
+.grid-form textarea{
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  transition:box-shadow .12s, border-color .12s;
+}
+.grid-form input:focus,
+.grid-form textarea:focus,
+.grid-form select:focus{
+  border-color:var(--accent);
+  box-shadow:0 6px 18px rgba(37,99,235,0.08);
+}
+
+/* Form actions */
+.form-actions{grid-column:1 / -1;display:flex;gap:10px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);
+  color:#fff;border:none;padding:10px 14px;border-radius:8px;
+  cursor:pointer;font-weight:600;
+  transition:transform .06s ease, box-shadow .06s;
+}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--border)}
+.small{padding:6px 8px;font-size:13px}
+
+/* Table card */
+.table-card{margin-top:10px}
+.table-wrap{overflow:auto;border-radius:8px}
+.styled-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+  background:transparent;
+}
+.styled-table caption{caption-side:top; text-align:left; font-weight:700;margin-bottom:8px}
+.styled-table thead th{
+  background:linear-gradient(180deg,#fbfdff,#f7f9ff);
+  padding:12px 14px;text-align:left;font-size:13px;color:var(--muted);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;
+}
+.styled-table tbody td{
+  padding:12px 14px;border-bottom:1px solid #f1f4f8;font-size:14px;color:var(--text);
+  vertical-align:middle;
+}
+.styled-table tbody tr:hover{background:#fbfcff}
+.action-btn{
+  padding:6px 8px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;
+}
+.action-btn.edit{color:var(--accent);border-color:rgba(37,99,235,0.12)}
+.action-btn.delete{color:var(--danger);border-color:rgba(239,68,68,0.08)}
+
+/* Responsive */
+@media (max-width:980px){
+  .grid-form{grid-template-columns:repeat(2,1fr)}
+  .styled-table{min-width:640px}
+}
+@media (max-width:640px){
+  .grid-form{grid-template-columns:1fr}
+  .container{padding:12px}
+  .styled-table{min-width:520px}
+}
+
+/* Utilities */
+.text-muted{color:var(--muted)}
+.flex{display:flex;align-items:center;gap:8px}
+.center{display:flex;align-items:center;justify-content:center}
+
+/* Small helpers for empty states */
+.empty-state{
+  padding:30px;text-align:center;color:var(--muted);font-size:15px;
+  border:1px dashed #e8eefc;border-radius:8px;background:#fbfdff;
+}
+
+/* Accessibility focus */
+:focus{outline:2px solid rgba(37,99,235,0.18);outline-offset:2px}
+
+/* Cabecera en tono Deep Space Sparkle puro */
 .header{
-  /* Cabecera en tono Deep Space Sparkle puro */
+  background: var(--accent);
+  color: white;
+  padding: 28px 24px;
+  /* Sombra más marcada para contraste */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.header .brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.logo{
+  width:56px;height:56px;border-radius:12px;
+  /* Logo en color complementario más claro */
+  background: var(--accent-2); 
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1) inset;
+  color: var(--accent); /* Texto del logo en el color oscuro */
+}
+.header h1{margin:0;font-size:20px;letter-spacing:0.2px}
+.header nav a{color:rgba(255,255,255,0.95);text-decoration:none;margin-left:18px;font-weight:600}
+.container{max-width:1100px;margin:26px auto;padding:0 18px;}
+.card{
+  background:var(--card);
+  border-radius:12px;
+  padding:16px;
+  box-shadow: var(--shadow);
+  margin-bottom:20px;
+}
+.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+/* --- Botón Principal (Deep Space Sparkle) --- */
+.btn{
+  background:var(--accent);
+  color:var(--btn-text);
+  padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;
+  /* Sombra sutil con el tono base */
+  box-shadow:0 4px 12px rgba(74,100,108,0.25); 
+  transition: background-color 0.2s;
+}
+.btn:hover{
+  background: #3B5157; /* Tono ligeramente más oscuro al pasar el mouse */
+}
+/* --- Botón Alternativo (Acento Claro y Contraste) --- */
+.btn.alt{
+  background:var(--accent-2); /* Acento claro como fondo */
+  color:var(--accent); /* Texto en el color oscuro principal */
+  border: 2px solid var(--accent-2); 
+  box-shadow: none;
+}
+.btn.alt:hover{
+  background: #6DABAF; /* Tono de acento más oscuro al pasar el mouse */
+  color: white; /* Texto blanco para mayor contraste al pasar el mouse */
+}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;border-bottom:1px solid #CFD8DC;text-align:left}
+/* Cabecera de tabla con el tono de acento claro */
+th{background:var(--accent-2); color: var(--accent);}
+.actions button{margin-right:6px}
+.form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+/* Campos de formulario con borde suave */
+.form-row input, .form-row select{padding:10px;border-radius:8px;border:1px solid #CFD8DC;min-width:160px}
+.back-link{display:inline-block;margin-top:12px;color:var(--muted);text-decoration:none}
+.footer{text-align:center;color:var(--muted);margin:28px 0 60px}
+
+/* Asegura que el contenedor de cada campo use Flexbox en dirección de columna */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; /* Agrega espacio debajo de cada campo/fila */
+}
+
+/* Estilo para las etiquetas */
+.form-field label {
+  font-weight: 600; /* Hace que la etiqueta sea más legible */
+  margin-bottom: 5px; /* Pequeño espacio entre la etiqueta y la caja de texto */
+  color: var(--text-main); /* Usa el color de texto principal */
+}
+
+/* Estilo para los inputs */
+.form-field input, .form-field textarea {
+  width: 100%; /* El input ocupa todo el ancho de su columna */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #CFD8DC; /* Color de borde suave */
+  box-sizing: border-box; /* Importante para que el padding no desborde el ancho */
+}
+
+/* Reajustar la clase antigua si se sigue usando para campos de ancho completo */
+.form-row {
+  margin-bottom: 15px;
+}
+.form-row input, .form-row select, .form-row textarea {
+  /* Asegura que los elementos dentro de form-row también ocupen el 100% si no tienen etiqueta */
+  width: 100%;
+  box-sizing: border-box; 
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el saludo y el enlace de cerrar sesión */
+}
+
+.user-info .welcome-text {
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+}
+
+.user-info .logout-link {
+    /* Estilos del enlace de Cerrar Sesión */
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Borde sutil */
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.user-info .logout-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.main-nav a.active {
+    font-weight: 700 !important; /* Fuerza la negrita (Bold) */
+    color: white !important; /* Asegura que el color sea blanco, destacando */
+    text-decoration: underline; /* Añade un subrayado */
+    text-underline-offset: 4px; /* Separa el subrayado del texto */
+    text-decoration-thickness: 2px; /* Grosor del subrayado */
+    text-decoration-color: var(--accent-2); /* Usa el color de acento claro para el subrayado */
+}
+
+/* Estilo del Contenedor Principal del Panel */
+.dashboard-grid {
+    display: grid;
+    /* Define 3 columnas de igual ancho para los recuadros */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px; /* Espacio entre los recuadros */
+    margin-top: 30px;
+}
+
+/* Estilo para cada Recuadro/Opción (La "Carpeta") */
+.dashboard-card {
+    background: var(--card); /* Fondo blanco */
+    border-radius: 12px;
+    padding: 30px;
+    
+    /* Sombra suave y elevada para un efecto moderno */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+    
+    /* Pequeño toque del color principal en el borde izquierdo */
+    border-left: 6px solid var(--accent); 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; /* Asegura que no tenga subrayado si es un enlace */
+    color: var(--text-main);
+}
+
+/* Efecto Hover Moderno */
+.dashboard-card:hover {
+    transform: translateY(-5px); /* Se eleva ligeramente */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Sombra más fuerte */
+}
+
+/* Estilo para los Iconos Modernos (Líneas Blancas) */
+.dashboard-card .icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Icono circular */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Fondo con el color Deep Space Sparkle */
+    background: var(--accent); 
+}
+
+/* Estilo para los iconos SVG o Fuentes de Iconos */
+.dashboard-card .icon-box svg, 
+.dashboard-card .icon-box i {
+    font-size: 28px;
+    color: white; /* Color blanco para las líneas del icono */
+    stroke: white; /* Para asegurar el color si usas SVG o stroke-based icons */
+    stroke-width: 2;
+}
+
+/* Estilo para el Título de la Opción */
+.dashboard-card h2 {
+    margin: 0 0 5px 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Estilo para la descripción de la Opción */
+.dashboard-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+#signupForm h2 {
+    margin-top: 0;
+    color: var(--text-main); 
+    text-align: center; 
+}
+.auth-brand .logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    /* Usa el color principal: Deep Space Sparkle */
+    color: var(--accent); 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* assets/style.css - Event theme (Deep Space Sparkle) */
+/* Estilos globales mejorados para toda la página (formulario, tabla, layout, botones) */
+
+:root{
+  /* --- Paleta Deep Space Sparkle (Azul-Verde Oscuro) --- */
+  --deep-space-sparkle: #4A646C; /* El color principal - Tono oscuro */
+  --bg:#F0F8F9; /* Fondo muy claro y fresco (casi blanco) */
+  --accent:var(--deep-space-sparkle); /* Color primario: Deep Space Sparkle */
+  --accent-2:#89C4C4; /* Tono de acento más claro, un cian grisáceo/menta */
+  --card:#fff; /* Fondo de tarjetas */
+  --muted:#78909C; /* Gris azulado (para texto atenuado/links) */
+  --text-main:#263238; /* Gris azulado muy oscuro para el texto principal */
+  --shadow: 0 6px 18px rgba(0,0,0,0.12);
+  --glass: rgba(255,255,255,0.6);
+  --btn-text:white; /* Texto de botón principal en blanco */
+  --accent-600:#1e40af;
+  --success:#10b981;
+  --danger:#ef4444;
+  --border:#e6e9ef;
+  --radius:10px;
+  --shadow: 0 6px 20px rgba(16,24,40,0.06);
+  --max-w:1100px;
+  --gap:14px;
+  --mono: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--mono);
+  /* Degradado sutil en tonos grises/azules muy claros */
+  background: linear-gradient(120deg,var(--bg) 0%, #E8F1F2 100%);
+  color:var(--text-main);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  padding:28px 18px;
+}
+
+/* Container */
+.container{
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:22px;
+}
+
+/* Header */
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+header h1{font-size:20px;margin:0;color:var(--accent-600)}
+.header-meta{color:var(--muted);font-size:13px}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+
+/* Form layout */
+.form-card{margin-bottom:18px}
+.grid-form{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--gap);
+  align-items:end;
+}
+.grid-form label{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted)}
+.grid-form input[type="text"],
+.grid-form input[type="number"],
+.grid-form select,
+.grid-form textarea{
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-size:14px;
+  color:var(--text);
+  outline:none;
+  transition:box-shadow .12s, border-color .12s;
+}
+.grid-form input:focus,
+.grid-form textarea:focus,
+.grid-form select:focus{
+  border-color:var(--accent);
+  box-shadow:0 6px 18px rgba(37,99,235,0.08);
+}
+
+/* Form actions */
+.form-actions{grid-column:1 / -1;display:flex;gap:10px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);
+  color:#fff;border:none;padding:10px 14px;border-radius:8px;
+  cursor:pointer;font-weight:600;
+  transition:transform .06s ease, box-shadow .06s;
+}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--border)}
+.small{padding:6px 8px;font-size:13px}
+
+/* Table card */
+.table-card{margin-top:10px}
+.table-wrap{overflow:auto;border-radius:8px}
+.styled-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+  background:transparent;
+}
+.styled-table caption{caption-side:top; text-align:left; font-weight:700;margin-bottom:8px}
+.styled-table thead th{
+  background:linear-gradient(180deg,#fbfdff,#f7f9ff);
+  padding:12px 14px;text-align:left;font-size:13px;color:var(--muted);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;
+}
+.styled-table tbody td{
+  padding:12px 14px;border-bottom:1px solid #f1f4f8;font-size:14px;color:var(--text);
+  vertical-align:middle;
+}
+.styled-table tbody tr:hover{background:#fbfcff}
+.action-btn{
+  padding:6px 8px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;
+}
+.action-btn.edit{color:var(--accent);border-color:rgba(37,99,235,0.12)}
+.action-btn.delete{color:var(--danger);border-color:rgba(239,68,68,0.08)}
+
+/* Responsive */
+@media (max-width:980px){
+  .grid-form{grid-template-columns:repeat(2,1fr)}
+  .styled-table{min-width:640px}
+}
+@media (max-width:640px){
+  .grid-form{grid-template-columns:1fr}
+  .container{padding:12px}
+  .styled-table{min-width:520px}
+}
+
+/* Utilities */
+.text-muted{color:var(--muted)}
+.flex{display:flex;align-items:center;gap:8px}
+.center{display:flex;align-items:center;justify-content:center}
+
+/* Small helpers for empty states */
+.empty-state{
+  padding:30px;text-align:center;color:var(--muted);font-size:15px;
+  border:1px dashed #e8eefc;border-radius:8px;background:#fbfdff;
+}
+
+/* Accessibility focus */
+:focus{outline:2px solid rgba(37,99,235,0.18);outline-offset:2px}
+
+/* Cabecera en tono Deep Space Sparkle puro */
+.header{
   background: var(--accent);
   color: white;
   padding: 28px 24px;

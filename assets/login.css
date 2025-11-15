@@ -1,6 +1,6 @@
 /* Fondo tipo galaxia */
 body {
-    background: url('https://wallpapers.com/images/featured/fondods-de-galaxia-verde-4r1z92ebrwwm48uw.jpg');
+    background: url('https://www.latevaweb.com/diseno-web/webs-para-eventos.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -18,16 +18,16 @@ body {
     padding: 30px;
     width: 330px;
     border-radius: 15px;
-    box-shadow: 0 0 25px rgba(0, 255, 0, 0.25);
+    box-shadow: 0 0 25px rgba(180, 0, 255, 0.35);
     text-align: center;
 }
 
 /* Título */
 h2 {
-    color: rgb(23, 255, 23);
+    color: rgb(200, 0, 255);
     margin-bottom: 20px;
     font-weight: bold;
-    text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+    text-shadow: 0 0 8px rgba(200, 0, 255, 0.8);
     font-size: 26px;
 }
 
@@ -46,12 +46,12 @@ input[type="password"] {
     padding: 12px;
     margin: 8px 0;
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(23, 255, 23, 0.4);
+    border: 1px solid rgba(180, 0, 255, 0.5);
     border-radius: 6px;
     font-size: 16px;
     color: white;
 
-    box-shadow: 0 0 12px rgba(23, 255, 23, 0.15);
+    box-shadow: 0 0 12px rgba(180, 0, 255, 0.25);
 }
 
 input::placeholder {
@@ -66,18 +66,18 @@ input::placeholder {
     font-size: 18px;
     font-weight: bold;
 
-    background: rgb(23, 255, 23);
+    background: rgb(180, 0, 255);
     color: black;
     border: none;
     border-radius: 6px;
     cursor: pointer;
 
-    box-shadow: 0 0 15px rgba(23, 255, 23, 0.5);
+    box-shadow: 0 0 15px rgba(180, 0, 255, 0.7);
     transition: .2s ease-in-out;
 }
 
 /* Efecto hover del botón */
 #boton:hover {
-    background: rgb(0, 200, 0);
-    box-shadow: 0 0 25px rgba(23, 255, 23, 0.8);
+    background: rgb(150, 0, 220);
+    box-shadow: 0 0 25px rgba(180, 0, 255, 1);
 }

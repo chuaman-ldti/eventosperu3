@@ -8,6 +8,7 @@ class User {
     public $id;
     public $username;
     public $password;
+    public $role; // Propiedad añadida
 
     public function __construct() {
         $db = new Database();
@@ -15,6 +16,7 @@ class User {
     }
 
     public function findByUsername($username) {
+        // Esta consulta ya trae todos los campos, incluido 'role'
         $sql = "SELECT * FROM " . $this->table . " WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':username', $username);
@@ -22,13 +24,22 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createUser($username, $password) {
+    /**
+     * Función actualizada para incluir el rol.
+     * Por defecto se asigna 'user' si no se especifica.
+     */
+    public function createUser($username, $password, $role = 'user') {
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO " . $this->table . " (username, password) VALUES (:username, :password)";
+            
+            // Consulta SQL actualizada para insertar el rol
+            $sql = "INSERT INTO " . $this->table . " (username, password, role) VALUES (:username, :password, :role)";
+            
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':role', $role); // Añadir binding para el rol
+            
             return $stmt->execute();
         } catch (PDOException $e) {
             return false;

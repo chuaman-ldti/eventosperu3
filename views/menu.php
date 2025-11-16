@@ -5,6 +5,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 $current_page = basename($_SERVER['PHP_SELF']);
+
+// Definimos $current_page (aunque parece que no se usa en el nav de signup.php)
+// Pero es buena práctica tenerla si la cabecera es un include.
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,7 +37,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         
         <div class="user-info">
             <span class="welcome-text">Bienvenido **<?php echo htmlspecialchars($_SESSION['username']); ?>** 👨‍💻</span>
-            <a href="app/action/logout.php" class="logout-link">Cerrar Sesión</a>
+            <a href="logout.php" class="logout-link">Cerrar Sesión</a>
         </div>
     </header>
 
@@ -68,6 +72,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <p>Controla las fechas, ubicaciones y estados de los eventos.</p>
             </a>
             
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
             <a href="signup.php" class="dashboard-card">
                 <div class="icon-box">
                     <i class="fas fa-user-plus"></i>
@@ -75,7 +80,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <h2>Registro de Usuarios</h2>
                 <p>Crea nuevas cuentas para el personal de administración.</p>
             </a>
-            
+            <?php endif; ?> 
             </div>
         <div class="footer">© Grupo 10 - JavaTeam</div>
     </main>

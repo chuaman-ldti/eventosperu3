@@ -1,15 +1,29 @@
 <?php
 require_once __DIR__ . '/../models/User.php';
 
-// Iniciar sesión para acceder a la variable 'username' si existe
 session_start();
 
+// -----------------------------------------------------------------
+// AÑADIDO: Protección de la página
+// Solo los administradores pueden registrar nuevos usuarios.
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    // Si no es admin, redirigir al menú principal.
+    header("Location: menu.php"); 
+    exit;
+}
+// -----------------------------------------------------------------
+
+
 $message = '';
-$errors = []; // Array para guardar múltiples errores
+$errors = []; 
+$username_form = ''; // Variable para repoblar el campo usuario
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
+    $role = trim($_POST['role'] ?? 'user'); // <-- CAMBIO: Obtener el rol del formulario
+    
+    $username_form = $username; // Guardar para repoblar
 
     // Validación 1: Campos no vacíos
     if (empty($username) || empty($password)) {
@@ -22,24 +36,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validación 3: Contraseña alfanumérica
-    // Comprueba si la contraseña contiene al menos una letra y un número.
     if (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
         $errors[] = "⚠️ La contraseña debe ser alfanumérica (contener letras y números).";
     }
+    
+    // Validación 4: Rol válido
+    if (!in_array($role, ['user', 'admin'])) {
+         $errors[] = "⚠️ Rol no válido.";
+    }
+
 
     // Si no hay errores, procede a crear el usuario
     if (empty($errors)) {
         $userModel = new User();
-        if ($userModel->createUser($username, $password)) {
-            // Recomiendo redirigir al login o al menú principal después del éxito
-            $message = "✅ Usuario creado correctamente.";
+        
+        // Comprobar si el usuario ya existe (movido desde el modelo para mejor feedback)
+        if ($userModel->findByUsername($username)) {
+            $errors[] = "❌ Error: El nombre de usuario '{$username}' ya existe.";
         } else {
-            $errors[] = "❌ Error al crear el usuario. El usuario podría ya existe.";
+            // <-- CAMBIO: Pasar el rol a createUser
+            if ($userModel->createUser($username, $password, $role)) {
+                $message = "✅ Usuario '{$username}' creado correctamente con el rol '{$role}'.";
+                $username_form = ''; // Limpiar campo de usuario en éxito
+            } else {
+                $errors[] = "❌ Error desconocido al crear el usuario.";
+            }
         }
     }
 }
 
-// Variables para la cabecera (necesitas definir $current_page si quieres el 'active')
+// Variables para la cabecera
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -51,40 +77,41 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="../assets/style.css">
     
     <style>
+        /* (Tu CSS personalizado para signup.css va aquí) */
+        /* ... */
         body {
-            /* Desactiva el display: flex del style.css para usar la cabecera */
             display: block; 
-            min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura */
+            min-height: 100vh;
         }
         .container.signup-page {
-            /* Centraliza el formulario debajo de la cabecera */
             display: flex;
             justify-content: center;
             padding: 30px 18px;
-            /* Usa max-width: 1100px para centrar el formulario si es necesario */
         }
-        /* Ajuste para el formulario de autenticación/registro */
         #signupForm {
             width: 100%;
-            max-width: 380px; /* Ancho máximo para el formulario */
+            max-width: 380px; 
             margin: 0 auto;
             padding: 2rem;
             border-radius: 12px;
-            box-shadow: var(--shadow); /* Usar la sombra del CSS global */
-            background: var(--card); /* Fondo blanco/claro */
+            box-shadow: var(--shadow);
+            background: var(--card); 
         }
         #signupForm h2 {
             margin-top: 0;
             color: var(--text-main);
         }
-        #signupForm input {
+        /* Estilo para inputs y select */
+        #signupForm input,
+        #signupForm select {
             display: block;
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             border-radius: 8px;
-            border: 1px solid #CFD8DC; /* Borde suave */
+            border: 1px solid #CFD8DC; 
             box-sizing: border-box;
+            background: #FFF; /* Asegurar fondo blanco para select */
         }
         #signupForm button[type="submit"] {
             width: 100%;
@@ -130,18 +157,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
     </header>
         <div style="
-         text-align:center;
-         margin-top: 35px;
-         margin-bottom: -10px;">
+          text-align:center;
+          margin-top: 35px;
+          margin-bottom: -10px;">
 
       <a href="menu.php" 
-           style="
-           font-size: 22px;
-           font-weight: 600;
-          color: #263238;
-          text-decoration: none;">
-           ← Volver al Panel Principal
-         </a>
+            style="
+            font-size: 22px;
+            font-weight: 600;
+           color: #263238;
+           text-decoration: none;">
+            ← Volver al Panel Principal
+          </a>
         </div>
 
     <main class="container signup-page">
@@ -160,8 +187,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <div class="msg success"><?= htmlspecialchars($message) ?></div>
             <?php endif; ?>
 
-            <input type="text" name="username" placeholder="Usuario" value="<?= htmlspecialchars($username ?? '') ?>" required>
+            <input type="text" name="username" placeholder="Usuario" value="<?= htmlspecialchars($username_form) ?>" required>
             <input type="password" name="password" placeholder="Contraseña" required>
+
+            <label for="role" style="display:block; margin-bottom: 5px; color: #555; font-size: 0.9em;">Rol del nuevo usuario:</label>
+            <select name="role" id="role" required>
+                <option value="user" selected>Usuario (User)</option>
+                <option value="admin">Administrador (Admin)</option>
+            </select>
+            
             <button type="submit" class="btn">Registrar</button>
             
         </form>

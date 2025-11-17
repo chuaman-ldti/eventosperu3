@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2025 a las 04:57:40
+-- Tiempo de generación: 17-11-2025 a las 05:46:38
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -119,20 +119,22 @@ CREATE TABLE `resenas` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`) VALUES
-(1, 'admin', '*4ACFE3202A5FF5CF467898FC58AAB1D615029441'),
-(2, 'chuaman', '$2y$10$czRolvWh6ctdMc3SvCeBEetj/2M15qIAtAhlkaVs6IwNUOA1z/0/m'),
-(3, 'admin2', '$2y$10$YHTCz4aFVuF1tXcvMpn6xeOVGT.jyhrErJlXVCgqgBRF0n2yfIZOq'),
-(7, 'marcos', '$2y$10$KP7G6hwgA9rtit.yumIjAucg/yhKHuVXmBWkeJCLSKp5MmtHR2EOK'),
-(8, 'Leonardo', '$2y$10$2cjgBThk1XfCZMKhrK6Gj.K6FGPnFT6Pg/TDB7nf6w3gGB1j1Uu6W'),
-(9, 'eduardo', '$2y$10$GOfv//PMGsRKHHj0P/K7GuyOsWIw6zQjwR58n70scV5gya0.lofb2');
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+(1, 'admin', '*4ACFE3202A5FF5CF467898FC58AAB1D615029441', 'user'),
+(2, 'chuaman', '$2y$10$czRolvWh6ctdMc3SvCeBEetj/2M15qIAtAhlkaVs6IwNUOA1z/0/m', 'user'),
+(3, 'admin2', '$2y$10$YHTCz4aFVuF1tXcvMpn6xeOVGT.jyhrErJlXVCgqgBRF0n2yfIZOq', 'admin'),
+(7, 'marcos', '$2y$10$KP7G6hwgA9rtit.yumIjAucg/yhKHuVXmBWkeJCLSKp5MmtHR2EOK', 'user'),
+(8, 'Leonardo', '$2y$10$2cjgBThk1XfCZMKhrK6Gj.K6FGPnFT6Pg/TDB7nf6w3gGB1j1Uu6W', 'user'),
+(21, 'Eduardo21', '$2y$10$YHTCz4aFVuF1tXcvMpn6xeOVGT.jyhrErJlXVCgqgBRF0n2yfIZOq', 'user'),
+(22, 'Mascotas', '$2y$10$ABbMYGmpjFR37NlZzwEhEewe0WfI3bzTKtV2/.wU7wp9hCloRsZ1G', 'user');
 
 --
 -- Índices para tablas volcadas
@@ -205,7 +207,7 @@ ALTER TABLE `resenas`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Restricciones para tablas volcadas

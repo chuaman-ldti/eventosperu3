@@ -1,18 +1,42 @@
 <?php
 session_start();
+
+// Evitar cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+// Si no hay sesión, ir a login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
+
+// Cerrar sesión
+session_unset();
+session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel</title>
+    <title>Cerrar Sesión - EVENTOS PERU</title>
+    <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>
-    <h1>Bienvenido <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h1>
-    <a href="logout.php">Cerrar sesión</a>
+
+    <div class="container">
+        <div class="top">
+            <h1>EVENTOS PERU</h1>
+        </div>
+
+        <div class="card">
+            <h2>Sesión cerrada</h2>
+            <p>Has cerrado sesión correctamente.</p>
+            <a href="login.php" class="btn">Volver al inicio de sesión</a>
+        </div>
+    </div>
+
 </body>
 </html>
+

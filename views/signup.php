@@ -13,7 +13,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 // -----------------------------------------------------------------
 
-
 $message = '';
 $errors = []; 
 $username_form = ''; // Variable para repoblar el campo usuario
@@ -44,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!in_array($role, ['user', 'admin'])) {
          $errors[] = "⚠️ Rol no válido.";
     }
-
 
     // Si no hay errores, procede a crear el usuario
     if (empty($errors)) {

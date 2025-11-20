@@ -1,11 +1,10 @@
 <?php
 require_once __DIR__ . '/../models/User.php';
-
 session_start();
 
 // -----------------------------------------------------------------
-// AÑADIDO: Protección de la página
-// Solo los administradores pueden registrar nuevos usuarios.
+// Verifico si el usuario tiene rol "admin". Solo los administradores
+// están autorizados a crear nuevos usuarios.
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     // Si no es admin, redirigir al menú principal.
     header("Location: menu.php"); 
@@ -15,15 +14,17 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 
 $message = '';
 $errors = []; 
-$username_form = ''; // Variable para repoblar el campo usuario
+$username_form = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = trim($_POST['password'] ?? '');
-    $role = trim($_POST['role'] ?? 'user'); // <-- CAMBIO: Obtener el rol del formulario
+    $role = trim($_POST['role'] ?? 'user'); // <-- Obtengo el rol del formulario; por defecto "user"
     
-    $username_form = $username; // Guardar para repoblar
+    $username_form = $username; //Guardo el valor del usuario por si hay errores
 
+
+//----------------------------------------------------------------------
     // Validación 1: Campos no vacíos
     if (empty($username) || empty($password)) {
         $errors[] = "⚠️ Debes completar todos los campos.";
@@ -44,18 +45,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $errors[] = "⚠️ Rol no válido.";
     }
 
+//--------------------------------------------------------------------
+
     // Si no hay errores, procede a crear el usuario
     if (empty($errors)) {
         $userModel = new User();
         
-        // Comprobar si el usuario ya existe (movido desde el modelo para mejor feedback)
+        // Comprobar si el usuario ya existe en la BD
         if ($userModel->findByUsername($username)) {
             $errors[] = "❌ Error: El nombre de usuario '{$username}' ya existe.";
         } else {
-            // <-- CAMBIO: Pasar el rol a createUser
+            // Llamo al método createUser, pasándole también el rol
             if ($userModel->createUser($username, $password, $role)) {
                 $message = "✅ Usuario '{$username}' creado correctamente con el rol '{$role}'.";
-                $username_form = ''; // Limpiar campo de usuario en éxito
+                $username_form = ''; // Limpiar campo de usuario después del registro exitoso
             } else {
                 $errors[] = "❌ Error desconocido al crear el usuario.";
             }
@@ -63,9 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+
 // Variables para la cabecera
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -75,8 +80,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link rel="stylesheet" href="../assets/style.css">
     
     <style>
-        /* (Tu CSS personalizado para signup.css va aquí) */
-        /* ... */
+        /* Estilos específicos solo para esta vista */
         body {
             display: block; 
             min-height: 100vh;
@@ -135,6 +139,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </style>
 </head>
 <body>
+    <!-- Encabezado superior del sistema -->
     <header class="header">
         <div class="brand">
             <div class="logo">EP</div>
@@ -144,15 +149,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </div>
         </div>
         
+         <!-- Barra de navegación -->
         <nav class="main-nav">
             </nav>
         
         <div class="user-info">
         
+        <!-- Mensaje de bienvenida mostrando el nombre del usuario -->
         <span class="welcome-text">Bienvenido **<?php echo htmlspecialchars($_SESSION['username']); ?>** 👨‍💻</span>
         
+        <!-- Botón de cerrar sesión -->
         <a href="logout.php" class="logout-link">Cerrar Sesión</a>
     </div>
+
+
+      <!-- Enlace para volver al menú -->
     </header>
         <div style="
           text-align:center;
@@ -169,31 +180,37 @@ $current_page = basename($_SERVER['PHP_SELF']);
           </a>
         </div>
 
+     <!-- Contenedor principal del formulario -->
     <main class="container signup-page">
 
     <form id="signupForm" method="post" action="" color="#263238">
 
         <h2 style="margin-top:0;">Registrar nuevo usuario</h2>
 
+        <!-- Mostrar errores si existen -->
             <?php if (!empty($errors)): ?>
                 <?php foreach ($errors as $error): ?>
                     <div class="msg error"><?= htmlspecialchars($error) ?></div>
                 <?php endforeach; ?>
             <?php endif; ?>
 
+             <!-- Mostrar mensaje de éxito si existe -->
             <?php if ($message): ?>
                 <div class="msg success"><?= htmlspecialchars($message) ?></div>
             <?php endif; ?>
 
+                 <!-- Input para usuario y contraseña -->
             <input type="text" name="username" placeholder="Usuario" value="<?= htmlspecialchars($username_form) ?>" required>
             <input type="password" name="password" placeholder="Contraseña" required>
 
+            <!-- Select para elegir rol -->
             <label for="role" style="display:block; margin-bottom: 5px; color: #555; font-size: 0.9em;">Rol del nuevo usuario:</label>
             <select name="role" id="role" required>
                 <option value="user" selected>Usuario (User)</option>
                 <option value="admin">Administrador (Admin)</option>
             </select>
             
+            <!-- Botón de registrar -->
             <button type="submit" class="btn">Registrar</button>
             
         </form>

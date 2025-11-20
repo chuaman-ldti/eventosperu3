@@ -12,7 +12,12 @@ $menu_class = ($current_page == 'menu.php') ? ' active' : '';
 <head>
   <meta charset="utf-8">
   <title>Eventos Perú</title>
-  <link rel="stylesheet" href="../assets/style.css">
+  <?php
+    $cssPath = __DIR__ . '/../assets/style.css';
+    $cssVer = file_exists($cssPath) ? filemtime($cssPath) : time();
+  ?>
+  <link rel="stylesheet" href="../assets/style.css?v=<?php echo $cssVer; ?>">
+  <script src="../assets/app.js" defer></script>
 </head>
 <body>
   <header class="header">
@@ -25,15 +30,15 @@ $menu_class = ($current_page == 'menu.php') ? ' active' : '';
     </div>
     
     <nav class="main-nav">
-        <a class="<?php echo ($current_page == 'menu.php') ? ' active' : ''; ?>">Menu</a>
-        <a href="clients.php">Clientes</a>
-        <a href="providers.php">Proveedores</a>
-        <a href="events.php">Programacion</a>
+      <a href="menu.php" class="<?php echo ($current_page == 'menu.php') ? 'active' : ''; ?>">Menu</a>
+      <a href="clients.php" class="<?php echo ($current_page == 'clients.php') ? 'active' : ''; ?>">Clientes</a>
+      <a href="providers.php" class="<?php echo ($current_page == 'providers.php') ? 'active' : ''; ?>">Proveedores</a>
+      <a href="events.php" class="<?php echo ($current_page == 'events.php') ? 'active' : ''; ?>">Programacion</a>
     </nav>
     
     <div class="user-info">
         
-        <span class="welcome-text">Bienvenido **<?php echo htmlspecialchars($_SESSION['username']); ?>** 👨‍💻</span>
+        <span class="welcome-text">Bienvenido <?php echo htmlspecialchars($_SESSION['username'] ?? ''); ?> 👨‍💻</span>
         
         <a href="logout.php" class="logout-link">Cerrar Sesión</a>
         

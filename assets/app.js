@@ -200,6 +200,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Menu hamburger toggle (global)
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('.header');
+  if (!header) return;
+  // crear botón hamburger si no existe
+  let hb = header.querySelector('.hamburger');
+  if (!hb) {
+    hb = document.createElement('button');
+    hb.type = 'button';
+    hb.className = 'hamburger';
+    hb.setAttribute('aria-label','Abrir menú');
+    hb.innerHTML = '<span></span>';
+    // insertar antes del user-info
+    const userInfo = header.querySelector('.user-info');
+    header.insertBefore(hb, userInfo);
+  }
+
+  hb.addEventListener('click', () => {
+    header.classList.toggle('nav-open');
+  });
+});
+
 /* Clientes: carga tabla, guardar, editar, eliminar */
 const API_CLIENTS = '../api/clients.php';
 const CLIENT_COLS = ['id','nombre','telefono','email'];

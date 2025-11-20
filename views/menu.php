@@ -18,11 +18,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Eventos Perú</title>
-    <link rel="stylesheet" href="../assets/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    </head>
+        <meta charset="utf-8">
+        <title>Eventos Perú</title>
+        <?php
+            $cssPath = __DIR__ . '/../assets/style.css';
+            $cssVer = file_exists($cssPath) ? filemtime($cssPath) : time();
+        ?>
+        <link rel="stylesheet" href="../assets/style.css?v=<?php echo $cssVer; ?>">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        <script src="../assets/app.js" defer></script>
+        </head>
 <body>
     <header class="header">
         <div class="brand">
@@ -34,14 +39,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
         
         <nav class="main-nav">
-            <a href="menu.php" class="<?php echo ($current_page == 'menu.php') ? ' active' : ''; ?>">Menu</a>
-            <a href="clients.php" class="<?php echo ($current_page == 'clients.php') ? ' active' : ''; ?>">Clientes</a>
-            <a href="providers.php" class="<?php echo ($current_page == 'providers.php') ? ' active' : ''; ?>">Proveedores</a>
-            <a href="events.php" class="<?php echo ($current_page == 'events.php') ? ' active' : ''; ?>">Programacion</a>
+            <a href="menu.php" class="<?php echo ($current_page == 'menu.php') ? 'active' : ''; ?>">Menu</a>
+            <a href="clients.php" class="<?php echo ($current_page == 'clients.php') ? 'active' : ''; ?>">Clientes</a>
+            <a href="providers.php" class="<?php echo ($current_page == 'providers.php') ? 'active' : ''; ?>">Proveedores</a>
+            <a href="events.php" class="<?php echo ($current_page == 'events.php') ? 'active' : ''; ?>">Programacion</a>
         </nav>
         
         <div class="user-info">
-            <span class="welcome-text">Bienvenido **<?php echo htmlspecialchars($_SESSION['username']); ?>** 👨‍💻</span>
+            <span class="welcome-text">Bienvenido <?php echo htmlspecialchars($_SESSION['username'] ?? ''); ?> 👨‍💻</span>
             <a href="logout.php" class="logout-link">Cerrar Sesión</a>
         </div>
     </header>

@@ -51,9 +51,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </header>
 
-    <main class="container">
+    <main class="container dashboard-wrapper">
         
         <h2 style="margin-top:0">Panel de Administración</h2>
+        <link rel="stylesheet" href="../assets/style.css">   <!-- estilos generales -->
+        <link rel="stylesheet" href="../assets/menu.css">    <!-- estilos del dashboard -->
         <p style="margin-bottom: 30px; color:var(--muted);">Usa las tarjetas para gestionar clientes, proveedores y la programación de eventos.</p>
         
         <div class="dashboard-grid">

@@ -1,0 +1,58 @@
+/* === CSS EXCLUSIVO DEL DASHBOARD === */
+
+.dashboard-wrapper {
+    padding-top: 20px;
+}
+
+/* GRID */
+.dashboard-wrapper .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* CARD */
+.dashboard-wrapper .dashboard-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid #e8e8e8;
+    transition: 0.25s ease;
+    display: block;
+}
+
+.dashboard-wrapper .dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* CARD TITLE */
+.dashboard-wrapper .dashboard-card h2 {
+    color: #1a237e;
+    margin: 12px 0;
+    font-size: 22px;
+}
+
+/* DESCRIPTION */
+.dashboard-wrapper .dashboard-card p {
+    color: #555;
+    font-size: 15px;
+}
+
+/* ICON BOX */
+.dashboard-wrapper .icon-box {
+    width: 70px;
+    height: 70px;
+    background: #e3f2fd;
+    color: #0d47a1;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 34px;
+    margin-bottom: 20px;
+}

@@ -10,7 +10,7 @@ class AuthController {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role']; // <-- CAMBIO: Guardar el rol en la sesión
+            $_SESSION['role'] = $user['role']; 
             header("Location: ../views/menu.php");
             exit;
         } else {
@@ -19,13 +19,10 @@ class AuthController {
     }
 
     public static function register($username, $password) {
-        // Esta función parece no usarse en tu flujo de signup (signup.php usa el modelo directamente)
-        // pero la actualizamos por si acaso, aunque signup.php necesita un campo 'role'.
         $userModel = new User();
         if ($userModel->findByUsername($username)) {
             return "El usuario ya existe.";
         }
-        // Asumimos 'user' por defecto si se llama desde aquí
         if ($userModel->createUser($username, $password, 'user')) { 
             return true;
         } else {
@@ -34,7 +31,7 @@ class AuthController {
     }
 }
 
-// API-like handling for fetch requests with JSON body
+
 $raw = file_get_contents('php://input');
 $json = json_decode($raw, true);
 if ($json) {
@@ -49,7 +46,7 @@ if ($json) {
             session_regenerate_id(true);
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role']; // <-- CAMBIO: Guardar el rol en la sesión (API)
+            $_SESSION['role'] = $user['role']; 
             echo json_encode(['success' => true]);
             exit;
         } else {
@@ -59,14 +56,14 @@ if ($json) {
     } elseif ($action === 'register' || $action === 'signup') {
         $username = $json['username'] ?? '';
         $password = $json['password'] ?? '';
-        $role = $json['role'] ?? 'user'; // <-- CAMBIO: Aceptar rol desde la API
+        $role = $json['role'] ?? 'user'; 
         
         $userModel = new User();
         if ($userModel->findByUsername($username)) {
             echo json_encode(['success' => false, 'error' => 'Usuario ya existe']);
             exit;
         }
-        if ($userModel->createUser($username, $password, $role)) { // <-- CAMBIO: Pasar rol
+        if ($userModel->createUser($username, $password, $role)) 
             echo json_encode(['success' => true]);
             exit;
         } else {

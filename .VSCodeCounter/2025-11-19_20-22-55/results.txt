@@ -1,0 +1,65 @@
+Date : 2025-11-19 20:22:55
+Directory : c:\xampp\htdocs\eventosperu3
+Total : 29 files,  2677 codes, 242 comments, 473 blanks, all 3392 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| PHP        |         21 |      1,428 |         63 |        198 |      1,689 |
+| PostCSS    |          5 |        492 |         65 |         70 |        627 |
+| Log        |          1 |        373 |          0 |        124 |        497 |
+| JavaScript |          1 |        282 |         26 |         37 |        345 |
+| MS SQL     |          1 |        102 |         88 |         44 |        234 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                        | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                           |         29 |      2,677 |        242 |        473 |      3,392 |
+| . (Files)                                                   |          1 |          5 |          0 |          0 |          5 |
+| api                                                         |          6 |        747 |         18 |        158 |        923 |
+| assets                                                      |          6 |        774 |         91 |        107 |        972 |
+| config                                                      |          1 |         23 |          0 |          4 |         27 |
+| controllers                                                 |          1 |         72 |          4 |          5 |         81 |
+| database                                                    |          1 |        102 |         88 |         44 |        234 |
+| models                                                      |          1 |         35 |          6 |          8 |         49 |
+| views                                                       |         12 |        919 |         35 |        147 |      1,101 |
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                    | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\xampp\htdocs\eventosperu3\api\api_bootstrap.php          | PHP        |         26 |          9 |          6 |         41 |
+| c:\xampp\htdocs\eventosperu3\api\clients.php                | PHP        |         74 |          1 |          6 |         81 |
+| c:\xampp\htdocs\eventosperu3\api\events.php                 | PHP        |         90 |          3 |          6 |         99 |
+| c:\xampp\htdocs\eventosperu3\api\providers.php              | PHP        |         94 |          2 |         10 |        106 |
+| c:\xampp\htdocs\eventosperu3\api\providers_debug.log        | Log        |        373 |          0 |        124 |        497 |
+| c:\xampp\htdocs\eventosperu3\api\reviews.php                | PHP        |         90 |          3 |          6 |         99 |
+| c:\xampp\htdocs\eventosperu3\assets\app.js                  | JavaScript |        282 |         26 |         37 |        345 |
+| c:\xampp\htdocs\eventosperu3\assets\login.css               | PostCSS    |         66 |          7 |         11 |         84 |
+| c:\xampp\htdocs\eventosperu3\assets\menu.css                | PostCSS    |         45 |          6 |          7 |         58 |
+| c:\xampp\htdocs\eventosperu3\assets\style-copy.css          | PostCSS    |         61 |          1 |          1 |         63 |
+| c:\xampp\htdocs\eventosperu3\assets\style.css               | PostCSS    |        194 |         37 |         29 |        260 |
+| c:\xampp\htdocs\eventosperu3\assets\styles.css              | PostCSS    |        126 |         14 |         22 |        162 |
+| c:\xampp\htdocs\eventosperu3\config\database.php            | PHP        |         23 |          0 |          4 |         27 |
+| c:\xampp\htdocs\eventosperu3\controllers\AuthController.php | PHP        |         72 |          4 |          5 |         81 |
+| c:\xampp\htdocs\eventosperu3\database\init_db.sql           | MS SQL     |        102 |         88 |         44 |        234 |
+| c:\xampp\htdocs\eventosperu3\index.php                      | PHP        |          5 |          0 |          0 |          5 |
+| c:\xampp\htdocs\eventosperu3\models\User.php                | PHP        |         35 |          6 |          8 |         49 |
+| c:\xampp\htdocs\eventosperu3\views\clients.php              | PHP        |         85 |          0 |         12 |         97 |
+| c:\xampp\htdocs\eventosperu3\views\dashboard.php            | PHP        |         36 |          0 |          7 |         43 |
+| c:\xampp\htdocs\eventosperu3\views\events.php               | PHP        |        206 |          6 |         24 |        236 |
+| c:\xampp\htdocs\eventosperu3\views\hash.php                 | PHP        |          5 |          0 |          1 |          6 |
+| c:\xampp\htdocs\eventosperu3\views\index_old.php            | PHP        |         23 |          0 |          2 |         25 |
+| c:\xampp\htdocs\eventosperu3\views\login.php                | PHP        |         30 |          0 |         10 |         40 |
+| c:\xampp\htdocs\eventosperu3\views\logout.php               | PHP        |         32 |          3 |          8 |         43 |
+| c:\xampp\htdocs\eventosperu3\views\menu - copia.php         | PHP        |         64 |          0 |          8 |         72 |
+| c:\xampp\htdocs\eventosperu3\views\menu.php                 | PHP        |         86 |          2 |         12 |        100 |
+| c:\xampp\htdocs\eventosperu3\views\providers.php            | PHP        |        106 |          7 |         25 |        138 |
+| c:\xampp\htdocs\eventosperu3\views\signup - copia.php       | PHP        |         76 |          0 |          5 |         81 |
+| c:\xampp\htdocs\eventosperu3\views\signup.php               | PHP        |        170 |         17 |         33 |        220 |
+| Total                                                       |            |      2,677 |        242 |        473 |      3,392 |
++-------------------------------------------------------------+------------+------------+------------+------------+------------+

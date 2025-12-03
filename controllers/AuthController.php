@@ -63,7 +63,7 @@ if ($json) {
             echo json_encode(['success' => false, 'error' => 'Usuario ya existe']);
             exit;
         }
-        if ($userModel->createUser($username, $password, $role)) 
+        if ($userModel->createUser($username, $password, $role)) { // <-- CAMBIO: Pasar rol
             echo json_encode(['success' => true]);
             exit;
         } else {

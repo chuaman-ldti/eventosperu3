@@ -212,7 +212,6 @@ ALTER TABLE `users`
 --
 -- Restricciones para tablas volcadas
 --
-
 --
 -- Filtros para la tabla `eventos`
 --
